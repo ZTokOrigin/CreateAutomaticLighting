@@ -1,0 +1,73 @@
+plugins {
+    id 'java-library'
+    id 'net.neoforged.moddev' version '1.0.17'
+}
+
+tasks.named('wrapper', Wrapper).configure {
+    distributionType = Wrapper.DistributionType.BIN
+}
+
+version = project.mod_version
+group = project.mod_group_id
+
+repositories {
+    mavenLocal()
+    maven {
+        name = 'tterrag maven'
+        url = 'https://maven.tterrag.com/'
+    }
+    maven {
+        name = "CurseMaven"
+        url = "https://www.cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
+}
+
+neoForge {
+    version = project.neo_version
+
+    parchment {
+        mappingsVersion = '2024.07.28'
+        minecraftVersion = '1.21'
+    }
+
+    runs {
+        client {
+            client()
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+        }
+
+        server {
+            server()
+            programArgument '--nogui'
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+        }
+
+        data {
+            data()
+            programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+        }
+    }
+
+    mods {
+        "${mod_id}" {
+            sourceSet(sourceSets.main)
+        }
+    }
+}
+
+sourceSets.main.resources { srcDir 'src/generated/resources' }
+
+dependencies {
+    // Create Dependency
+    implementation("com.simibubi.create:create-${minecraft_version}:${create_version}:slim") { transitive = false }
+    implementation("net.createmod.ponder:Ponder-NeoForge-${minecraft_version}:1.0.43")
+    implementation("dev.engine-room.flywheel:flywheel-neoforge-${minecraft_version}:${flywheel_version}")
+    implementation("com.tterrag.registrate:Registrate:MC1.20-1.3.3") // Create uses Registrate
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
