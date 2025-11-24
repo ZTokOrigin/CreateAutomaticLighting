@@ -49,9 +49,9 @@ public void visitNewPosition(MovementContext context, BlockPos pos) {
 4.  Run `Client` to test.
 
 ## TODO List
-- [ ] Create `SmartDeployerBlock` registration.
-- [ ] Create `SmartDeployerBlockEntity` registration.
-- [ ] Implement `SmartDeployerMovementBehaviour`.
-- [ ] Register the Movement Behaviour in `CreateSmartDeployTorches.java` (or a dedicated registration class).
+- [x] Create `SmartDeployerBlock` registration.
+- [x] Create `SmartDeployerBlockEntity` registration.
+- [x] Implement `SmartDeployerMovementBehaviour`.
+- [x] Register the Movement Behaviour in `CreateSmartDeployTorches.java` (or a dedicated registration class).
 - [ ] Add recipes (Deployer + Light Sensor/Redstone Torch?).
 - [ ] Add textures/models (re-tinted Deployer?).

@@ -3,6 +3,12 @@ plugins {
     id 'net.neoforged.moddev' version '1.0.17'
 }
 
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
 tasks.named('wrapper', Wrapper).configure {
     distributionType = Wrapper.DistributionType.BIN
 }
