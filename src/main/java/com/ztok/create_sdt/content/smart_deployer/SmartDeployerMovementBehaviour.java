@@ -17,12 +17,35 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.UUID;
 import java.util.List;
 import java.util.Arrays;
 import java.lang.reflect.Method;
 import java.lang.reflect.Field;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
+import com.simibubi.create.content.contraptions.render.ContraptionMatrices;
+import com.ztok.create_sdt.SDTPartialModels;
+import net.createmod.catnip.render.CachedBuffers;
+import net.createmod.catnip.render.SuperByteBuffer;
+import net.minecraft.world.level.Level;
+import net.createmod.catnip.math.AngleHelper;
+import static com.simibubi.create.content.kinetics.base.DirectionalAxisKineticBlock.AXIS_ALONG_FIRST_COORDINATE;
+import static com.simibubi.create.content.kinetics.base.DirectionalKineticBlock.FACING;
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
+
+import com.simibubi.create.foundation.virtualWorld.VirtualRenderWorld;
+import net.minecraft.client.renderer.LevelRenderer;
+import net.minecraft.client.renderer.LightTexture;
+
+import com.simibubi.create.content.contraptions.render.ActorVisual;
+import dev.engine_room.flywheel.api.visualization.VisualizationContext;
+import com.simibubi.create.foundation.virtualWorld.VirtualRenderWorld;
 
 public class SmartDeployerMovementBehaviour extends DeployerMovementBehaviour {
 
@@ -205,5 +228,14 @@ public class SmartDeployerMovementBehaviour extends DeployerMovementBehaviour {
                 list.set(i, ItemStack.EMPTY);
             }
         }
+    }
+
+    // renderInContraption removed
+
+
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    public ActorVisual createVisual(VisualizationContext visualizationContext, VirtualRenderWorld simulationWorld, MovementContext movementContext) {
+        return new SmartDeployerActorVisual(visualizationContext, simulationWorld, movementContext);
     }
 }
