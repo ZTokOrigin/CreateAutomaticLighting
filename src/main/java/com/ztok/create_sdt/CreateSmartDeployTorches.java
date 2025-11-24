@@ -25,6 +25,7 @@ public class CreateSmartDeployTorches {
 
         SDTBlocks.register();
         SDTBlockEntities.register();
+        SDTPartialModels.init();
 
         // Register ourselves for server and other game events we are interested in
         // NeoForge.EVENT_BUS.register(this);

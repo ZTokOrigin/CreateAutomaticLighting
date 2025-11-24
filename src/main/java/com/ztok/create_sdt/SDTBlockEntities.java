@@ -13,9 +13,9 @@ public class SDTBlockEntities {
 
     public static final BlockEntityEntry<SmartDeployerBlockEntity> SMART_DEPLOYER = REGISTRATE
             .blockEntity("smart_deployer", SmartDeployerBlockEntity::new)
-            .visual(() -> DeployerVisual::new)
+            .visual(() -> SmartDeployerVisual::new)
             .validBlocks(SDTBlocks.SMART_DEPLOYER)
-            .renderer(() -> DeployerRenderer::new)
+            .renderer(() -> SmartDeployerRenderer::new)
             .register();
 
     public static void register() {
