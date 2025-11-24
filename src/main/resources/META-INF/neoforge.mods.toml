@@ -7,7 +7,7 @@ issueTrackerURL="https://github.com/Zmotive/CreateSmartDeployTorches/issues"
 modId="create_sdt"
 version="1.0.0"
 displayName="Create: Smart Deploy Torches"
-authors="Zack"
+authors="Zack Tokarczyk"
 description='''A Create addon that adds smart deployment capabilities for torches based on light levels.'''
 
 [[dependencies.create_sdt]]
