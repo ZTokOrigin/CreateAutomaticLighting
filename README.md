@@ -53,5 +53,10 @@ public void visitNewPosition(MovementContext context, BlockPos pos) {
 - [x] Create `SmartDeployerBlockEntity` registration.
 - [x] Implement `SmartDeployerMovementBehaviour`.
 - [x] Register the Movement Behaviour in `CreateSmartDeployTorches.java` (or a dedicated registration class).
-- [ ] Add recipes (Deployer + Light Sensor/Redstone Torch?).
-- [ ] Add textures/models (re-tinted Deployer?).
+- [x] Add recipes (Deployer + Torch + Electron Tube).
+- [x] Add textures/models (Custom blockstate handling).
+
+## Development Notes (Fixes & Findings)
+- **Recipe Generation**: Implemented `SDTRecipeProvider` using NeoForge DataGen to automatically generate the crafting recipe.
+- **Creative Tab Crash**: Removed manual `BuildCreativeModeTabContentsEvent` listener in `CreateSmartDeployTorches.java` to avoid "Duplicate Entry" crashes (Registrate handles this automatically).
+- **Model Rendering**: Disabled automatic blockstate generation in `SDTBlocks.java` (`.blockstate((c, p) -> {})`) to prevent DataGen from overwriting the custom `smart_deployer.json` model files.

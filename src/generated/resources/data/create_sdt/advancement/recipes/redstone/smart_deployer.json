@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_deployer": {
+      "conditions": {
+        "items": [
+          {
+            "items": "create:deployer"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "create_sdt:smart_deployer"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_deployer"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "create_sdt:smart_deployer"
+    ]
+  }
+}

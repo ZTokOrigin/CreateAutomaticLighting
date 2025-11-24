@@ -1,14 +1,22 @@
 package com.ztok.create_sdt.content.smart_deployer;
 
 import com.simibubi.create.content.kinetics.deployer.DeployerBlock;
+import com.simibubi.create.content.kinetics.deployer.DeployerBlock;
 import com.simibubi.create.content.kinetics.deployer.DeployerMovementBehaviour;
 import com.simibubi.create.content.kinetics.deployer.DeployerFakePlayer;
 import com.simibubi.create.content.contraptions.behaviour.MovementContext;
 import com.simibubi.create.content.contraptions.mounted.MountedContraption;
 import com.simibubi.create.foundation.item.ItemHelper;
+import com.simibubi.create.AllItems;
+import com.simibubi.create.content.contraptions.AbstractContraptionEntity;
+import com.simibubi.create.content.contraptions.OrientedContraptionEntity;
+import com.simibubi.create.content.trains.entity.CarriageContraptionEntity;
+import com.simibubi.create.content.logistics.filter.FilterItemStack;
+import net.createmod.catnip.math.VecHelper;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Direction.Axis;
 import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
@@ -26,40 +34,29 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Field;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
-import com.simibubi.create.content.contraptions.render.ContraptionMatrices;
-import com.ztok.create_sdt.SDTPartialModels;
-import net.createmod.catnip.render.CachedBuffers;
-import net.createmod.catnip.render.SuperByteBuffer;
 import net.minecraft.world.level.Level;
 import net.createmod.catnip.math.AngleHelper;
 import static com.simibubi.create.content.kinetics.base.DirectionalAxisKineticBlock.AXIS_ALONG_FIRST_COORDINATE;
 import static com.simibubi.create.content.kinetics.base.DirectionalKineticBlock.FACING;
-import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 
-import com.simibubi.create.foundation.virtualWorld.VirtualRenderWorld;
-import net.minecraft.client.renderer.LevelRenderer;
-import net.minecraft.client.renderer.LightTexture;
-
-import com.simibubi.create.content.contraptions.render.ActorVisual;
-import dev.engine_room.flywheel.api.visualization.VisualizationContext;
-import com.simibubi.create.foundation.virtualWorld.VirtualRenderWorld;
+// import com.simibubi.create.foundation.virtualWorld.VirtualRenderWorld;
+// import com.simibubi.create.content.contraptions.render.ActorVisual;
+// import dev.engine_room.flywheel.api.visualization.VisualizationContext;
 
 public class SmartDeployerMovementBehaviour extends DeployerMovementBehaviour {
 
     private static Class<?> modeClass;
-    private static Method activateMethod;
+    private static Method deployerHandlerActivateMethod;
     private static Field blockBreakingProgressField;
 
     static {
         try {
             modeClass = Class.forName("com.simibubi.create.content.kinetics.deployer.DeployerBlockEntity$Mode");
+            Class<?> deployerHandlerClass = Class.forName("com.simibubi.create.content.kinetics.deployer.DeployerHandler");
             
-            activateMethod = DeployerMovementBehaviour.class.getDeclaredMethod("activate", 
-                MovementContext.class, BlockPos.class, DeployerFakePlayer.class, modeClass);
-            activateMethod.setAccessible(true);
+            deployerHandlerActivateMethod = deployerHandlerClass.getDeclaredMethod("activate", 
+                DeployerFakePlayer.class, Vec3.class, BlockPos.class, Vec3.class, modeClass);
+            deployerHandlerActivateMethod.setAccessible(true);
 
             blockBreakingProgressField = DeployerFakePlayer.class.getDeclaredField("blockBreakingProgress");
             blockBreakingProgressField.setAccessible(true);
@@ -115,11 +112,7 @@ public class SmartDeployerMovementBehaviour extends DeployerMovementBehaviour {
         }
 
         // 5. Activate (Place the torch)
-        try {
-            activateMethod.invoke(this, context, pos, player, mode);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        activateCustom(context, pos, player, mode);
         
         // 6. Cleanup
         checkForTrackPlacementAdvancement(context, player);
@@ -192,6 +185,42 @@ public class SmartDeployerMovementBehaviour extends DeployerMovementBehaviour {
         return (DeployerFakePlayer) context.temporaryData;
     }
 
+    public void activateCustom(MovementContext context, BlockPos pos, DeployerFakePlayer player, Object mode) {
+        Level world = context.world;
+
+        player.placedTracks = false;
+
+        FilterItemStack filter = context.getFilterFromBE();
+        if (AllItems.SCHEMATIC.isIn(filter.item())) {
+            activateAsSchematicPrinter(context, pos, player, world, filter.item());
+            return;
+        }
+
+        Vec3 facingVec = Vec3.atLowerCornerOf(context.state.getValue(DeployerBlock.FACING)
+            .getNormal());
+        facingVec = context.rotation.apply(facingVec);
+        Vec3 vec = context.position.subtract(facingVec.scale(2));
+
+        float xRot = AbstractContraptionEntity.pitchFromVector(facingVec) - 90;
+        if (Math.abs(xRot) > 89) {
+            Vec3 initial = new Vec3(0, 0, 1);
+            if (context.contraption.entity instanceof OrientedContraptionEntity oce)
+                initial = VecHelper.rotate(initial, oce.getInitialYaw(), Axis.Y);
+            if (context.contraption.entity instanceof CarriageContraptionEntity cce)
+                initial = VecHelper.rotate(initial, 90, Axis.Y);
+            facingVec = context.rotation.apply(initial);
+        }
+
+        player.setYRot(AbstractContraptionEntity.yawFromVector(facingVec));
+        player.setXRot(xRot);
+
+        try {
+            deployerHandlerActivateMethod.invoke(null, player, vec, pos, facingVec, mode);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private Object getModeObject(MovementContext context) {
         String modeName = context.blockEntityData.getString("Mode");
         if (modeClass != null) {
@@ -233,9 +262,9 @@ public class SmartDeployerMovementBehaviour extends DeployerMovementBehaviour {
     // renderInContraption removed
 
 
-    @Override
-    @OnlyIn(Dist.CLIENT)
-    public ActorVisual createVisual(VisualizationContext visualizationContext, VirtualRenderWorld simulationWorld, MovementContext movementContext) {
-        return new SmartDeployerActorVisual(visualizationContext, simulationWorld, movementContext);
-    }
+    // @Override
+    // @OnlyIn(Dist.CLIENT)
+    // public ActorVisual createVisual(VisualizationContext visualizationContext, VirtualRenderWorld simulationWorld, MovementContext movementContext) {
+    //     return SmartDeployerVisuals.create(visualizationContext, simulationWorld, movementContext);
+    // }
 }

@@ -7,6 +7,10 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.client.event.ModelEvent;
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.minecraft.world.item.CreativeModeTabs;
+import com.ztok.create_sdt.datagen.SDTRecipeProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,12 +24,19 @@ public class CreateSmartDeployTorches {
     public CreateSmartDeployTorches(IEventBus modEventBus, ModContainer modContainer) {
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
+        modEventBus.addListener(this::gatherData);
 
         REGISTRATE.registerEventListeners(modEventBus);
 
         SDTBlocks.register();
         SDTBlockEntities.register();
-        SDTPartialModels.init();
+        if (FMLEnvironment.dist.isClient()) {
+            try {
+                Class.forName("com.ztok.create_sdt.ClientSetup").getMethod("init").invoke(null);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
         // Register ourselves for server and other game events we are interested in
         // NeoForge.EVENT_BUS.register(this);
@@ -33,5 +44,12 @@ public class CreateSmartDeployTorches {
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         LOGGER.info("Create: Smart Deploy Torches - Initialized!");
+    }
+
+    private void gatherData(GatherDataEvent event) {
+        event.getGenerator().addProvider(
+            event.includeServer(),
+            new SDTRecipeProvider(event.getGenerator().getPackOutput(), event.getLookupProvider())
+        );
     }
 }

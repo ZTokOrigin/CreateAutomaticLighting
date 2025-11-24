@@ -10,6 +10,8 @@ import com.ztok.create_sdt.content.smart_deployer.SmartDeployerMovementBehaviour
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.material.MapColor;
 
+import net.minecraft.world.item.CreativeModeTabs;
+
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
 
 public class SDTBlocks {
@@ -22,6 +24,7 @@ public class SDTBlocks {
             .tag(BlockTags.MINEABLE_WITH_PICKAXE)
             // .onRegister(com.simibubi.create.content.kinetics.BlockStressDefaults.setImpact(4.0))
             .onRegister(MovementBehaviour.movementBehaviour(new SmartDeployerMovementBehaviour()))
+            .blockstate((c, p) -> {})
             .item()
             .transform(customItemModel())
             .register();
