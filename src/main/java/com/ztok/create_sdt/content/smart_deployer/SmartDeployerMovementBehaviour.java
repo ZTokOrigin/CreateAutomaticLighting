@@ -1,7 +1,6 @@
 package com.ztok.create_sdt.content.smart_deployer;
 
 import com.simibubi.create.content.kinetics.deployer.DeployerBlock;
-import com.simibubi.create.content.kinetics.deployer.DeployerBlock;
 import com.simibubi.create.content.kinetics.deployer.DeployerMovementBehaviour;
 import com.simibubi.create.content.kinetics.deployer.DeployerFakePlayer;
 import com.simibubi.create.content.contraptions.behaviour.MovementContext;
@@ -10,7 +9,6 @@ import com.simibubi.create.foundation.item.ItemHelper;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.content.contraptions.AbstractContraptionEntity;
 import com.simibubi.create.content.contraptions.OrientedContraptionEntity;
-import com.simibubi.create.content.trains.entity.CarriageContraptionEntity;
 import com.simibubi.create.content.logistics.filter.FilterItemStack;
 import net.createmod.catnip.math.VecHelper;
 
@@ -22,27 +20,21 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.UUID;
 import java.util.List;
 import java.util.Arrays;
 import java.lang.reflect.Method;
 import java.lang.reflect.Field;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.minecraft.world.level.Level;
-import net.createmod.catnip.math.AngleHelper;
-import static com.simibubi.create.content.kinetics.base.DirectionalAxisKineticBlock.AXIS_ALONG_FIRST_COORDINATE;
-import static com.simibubi.create.content.kinetics.base.DirectionalKineticBlock.FACING;
 
-// import com.simibubi.create.foundation.virtualWorld.VirtualRenderWorld;
-// import com.simibubi.create.content.contraptions.render.ActorVisual;
-// import dev.engine_room.flywheel.api.visualization.VisualizationContext;
+import com.simibubi.create.foundation.virtualWorld.VirtualRenderWorld;
+import com.simibubi.create.content.contraptions.render.ContraptionMatrices;
+import net.minecraft.client.renderer.MultiBufferSource;
 
+@SuppressWarnings("null")
 public class SmartDeployerMovementBehaviour extends DeployerMovementBehaviour {
 
     private static Class<?> modeClass;
@@ -67,6 +59,7 @@ public class SmartDeployerMovementBehaviour extends DeployerMovementBehaviour {
     }
 
     @Override
+    @SuppressWarnings("null")
     public void visitNewPosition(MovementContext context, BlockPos pos) {
         if (context.world.isClientSide)
             return;
@@ -137,6 +130,7 @@ public class SmartDeployerMovementBehaviour extends DeployerMovementBehaviour {
         }
     }
 
+    @SuppressWarnings("deprecation")
     private boolean isLightSource(ItemStack stack) {
         if (stack.isEmpty()) return false;
         if (stack.getItem() instanceof BlockItem blockItem) {
@@ -145,6 +139,7 @@ public class SmartDeployerMovementBehaviour extends DeployerMovementBehaviour {
         return false;
     }
 
+    @SuppressWarnings("null")
     private boolean isLightSourceNearby(MovementContext context, BlockPos pos, int maxLight) {
         // Calculate required radius. Max light emission is 15.
         // We need to find a source such that (SourceLight - dist) > maxLight.
@@ -156,7 +151,7 @@ public class SmartDeployerMovementBehaviour extends DeployerMovementBehaviour {
             int dist = Math.abs(p.getX() - pos.getX()) + Math.abs(p.getY() - pos.getY()) + Math.abs(p.getZ() - pos.getZ());
             if (dist > searchRadius) continue;
             
-            int emission = context.world.getBlockState(p).getLightEmission();
+            int emission = context.world.getBlockState(p).getLightEmission(context.world, p);
             if (emission > 0) {
                 int lightAtTarget = emission - dist;
                 if (lightAtTarget > maxLight) {
@@ -206,8 +201,6 @@ public class SmartDeployerMovementBehaviour extends DeployerMovementBehaviour {
             Vec3 initial = new Vec3(0, 0, 1);
             if (context.contraption.entity instanceof OrientedContraptionEntity oce)
                 initial = VecHelper.rotate(initial, oce.getInitialYaw(), Axis.Y);
-            if (context.contraption.entity instanceof CarriageContraptionEntity cce)
-                initial = VecHelper.rotate(initial, 90, Axis.Y);
             facingVec = context.rotation.apply(initial);
         }
 
@@ -262,9 +255,9 @@ public class SmartDeployerMovementBehaviour extends DeployerMovementBehaviour {
     // renderInContraption removed
 
 
-    // @Override
-    // @OnlyIn(Dist.CLIENT)
-    // public ActorVisual createVisual(VisualizationContext visualizationContext, VirtualRenderWorld simulationWorld, MovementContext movementContext) {
-    //     return SmartDeployerVisuals.create(visualizationContext, simulationWorld, movementContext);
-    // }
+    @Override
+    public void renderInContraption(MovementContext context, VirtualRenderWorld renderWorld, ContraptionMatrices matrices,
+                                    MultiBufferSource buffer) {
+        super.renderInContraption(context, renderWorld, matrices, buffer);
+    }
 }

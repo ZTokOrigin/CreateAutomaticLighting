@@ -1,9 +1,6 @@
 package com.ztok.create_sdt;
 
-import com.simibubi.create.content.kinetics.deployer.DeployerRenderer;
-import com.simibubi.create.content.kinetics.deployer.DeployerVisual;
 import com.simibubi.create.foundation.data.CreateRegistrate;
-import com.simibubi.create.foundation.data.CreateBlockEntityBuilder;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 import com.ztok.create_sdt.content.smart_deployer.SmartDeployerBlockEntity;
 

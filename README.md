@@ -60,3 +60,10 @@ public void visitNewPosition(MovementContext context, BlockPos pos) {
 - **Recipe Generation**: Implemented `SDTRecipeProvider` using NeoForge DataGen to automatically generate the crafting recipe.
 - **Creative Tab Crash**: Removed manual `BuildCreativeModeTabContentsEvent` listener in `CreateSmartDeployTorches.java` to avoid "Duplicate Entry" crashes (Registrate handles this automatically).
 - **Model Rendering**: Disabled automatic blockstate generation in `SDTBlocks.java` (`.blockstate((c, p) -> {})`) to prevent DataGen from overwriting the custom `smart_deployer.json` model files.
+- **JEI Integration**: Fixed issue where the Smart Deployer was hidden in JEI.
+    - Implemented `IModPlugin` to manually register the item and its subtypes.
+    - Used `registerSubtypeInterpreter` to distinguish items based on components/NBT.
+    - **Reference Links**:
+        - [JEI Wiki: Getting Started](https://github.com/mezz/JustEnoughItems/wiki/Getting-Started-%5BJEI-for-Minecraft-1.21-for-NeoForge,-Forge,-or-Fabric%5D)
+        - [JEI Wiki: Adding Items](https://github.com/mezz/JustEnoughItems/wiki/Adding-Items)
+        - [JEI Wiki: Item Subtypes](https://github.com/mezz/JustEnoughItems/wiki/Item-Subtypes)

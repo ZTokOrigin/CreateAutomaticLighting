@@ -1,9 +1,7 @@
 package com.ztok.create_sdt;
 
 import com.simibubi.create.content.kinetics.base.ShaftVisual;
-import com.simibubi.create.content.kinetics.deployer.DeployerBlock;
 import com.simibubi.create.content.kinetics.deployer.DeployerBlockEntity;
-import com.ztok.create_sdt.SDTPartialModels;
 import dev.engine_room.flywheel.api.visual.DynamicVisual;
 import dev.engine_room.flywheel.api.visual.TickableVisual;
 import dev.engine_room.flywheel.api.visualization.VisualizationContext;
@@ -12,9 +10,7 @@ import dev.engine_room.flywheel.lib.instance.OrientedInstance;
 import dev.engine_room.flywheel.lib.model.Models;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import dev.engine_room.flywheel.lib.visual.SimpleDynamicVisual;
-import dev.engine_room.flywheel.lib.visual.SimpleTickableVisual;
 import net.createmod.catnip.math.AngleHelper;
-import net.createmod.catnip.nbt.NBTHelper;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import com.mojang.math.Axis;
@@ -22,7 +18,8 @@ import com.mojang.math.Axis;
 import static com.simibubi.create.content.kinetics.base.DirectionalAxisKineticBlock.AXIS_ALONG_FIRST_COORDINATE;
 import static com.simibubi.create.content.kinetics.base.DirectionalKineticBlock.FACING;
 
-public class SmartDeployerVisual extends ShaftVisual<DeployerBlockEntity> implements SimpleDynamicVisual, SimpleTickableVisual {
+@SuppressWarnings("null")
+public class SmartDeployerVisual extends ShaftVisual<DeployerBlockEntity> implements SimpleDynamicVisual {
 
     final Direction facing;
     final float yRot;

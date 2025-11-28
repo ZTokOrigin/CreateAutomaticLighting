@@ -27,6 +27,7 @@ import com.mojang.math.Axis;
 import static com.simibubi.create.content.kinetics.base.DirectionalAxisKineticBlock.AXIS_ALONG_FIRST_COORDINATE;
 import static com.simibubi.create.content.kinetics.base.DirectionalKineticBlock.FACING;
 
+@SuppressWarnings("null")
 public class SmartDeployerActorVisual extends ActorVisual {
 
     private final TransformedInstance pole;
@@ -40,7 +41,7 @@ public class SmartDeployerActorVisual extends ActorVisual {
         super(visualizationContext, simulationWorld, context);
 
         BlockState state = context.state;
-        Direction facing = state.getValue(FACING);
+        Direction facing = state.getValue((net.minecraft.world.level.block.state.properties.Property<Direction>) FACING);
 
         // Shaft
         Direction.Axis axis = KineticBlockEntityVisual.rotationAxis(state);

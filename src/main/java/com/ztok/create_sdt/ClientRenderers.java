@@ -5,6 +5,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import dev.engine_room.flywheel.api.visualization.VisualizationContext;
 
 public class ClientRenderers {
+    @SuppressWarnings("unchecked")
     public static BlockEntityRendererProvider<SmartDeployerBlockEntity> renderer() {
         return context -> (net.minecraft.client.renderer.blockentity.BlockEntityRenderer<SmartDeployerBlockEntity>) (Object) new SmartDeployerRenderer(context);
     }

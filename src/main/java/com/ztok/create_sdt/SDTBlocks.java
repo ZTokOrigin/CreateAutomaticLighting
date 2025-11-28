@@ -10,10 +10,9 @@ import com.ztok.create_sdt.content.smart_deployer.SmartDeployerMovementBehaviour
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.material.MapColor;
 
-import net.minecraft.world.item.CreativeModeTabs;
-
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
 
+@SuppressWarnings("null")
 public class SDTBlocks {
 
     private static final CreateRegistrate REGISTRATE = CreateSmartDeployTorches.REGISTRATE;

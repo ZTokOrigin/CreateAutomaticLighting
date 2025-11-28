@@ -63,6 +63,7 @@ public class SmartDeployerBlockEntity extends DeployerBlockEntity {
         }
 
         @Override
+        @SuppressWarnings("null")
         public Vec3 getLocalOffset(LevelAccessor level, BlockPos pos, BlockState state) {
             Direction facing = state.getValue(DeployerBlock.FACING);
             Vec3 vec = VecHelper.voxelSpace(8f, 8f, 15.5f);
@@ -76,6 +77,7 @@ public class SmartDeployerBlockEntity extends DeployerBlockEntity {
         }
 
         @Override
+        @SuppressWarnings("null")
         protected boolean isSideActive(BlockState state, Direction direction) {
             Direction facing = state.getValue(DeployerBlock.FACING);
             if (direction.getAxis() == facing.getAxis())
