@@ -1,6 +1,8 @@
 package com.ztok.create_sdt;
 
 import com.simibubi.create.foundation.data.CreateRegistrate;
+import com.simibubi.create.foundation.item.ItemDescription;
+import net.createmod.catnip.lang.FontHelper;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
@@ -16,7 +18,8 @@ public class CreateSmartDeployTorches {
     public static final String MOD_ID = "create_sdt";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
-    public static final CreateRegistrate REGISTRATE = CreateRegistrate.create(MOD_ID);
+    public static final CreateRegistrate REGISTRATE = CreateRegistrate.create(MOD_ID)
+            .setTooltipModifierFactory(item -> new ItemDescription.Modifier(item, FontHelper.Palette.STANDARD_CREATE));
 
     public CreateSmartDeployTorches(IEventBus modEventBus, ModContainer modContainer) {
         // Register the commonSetup method for modloading
