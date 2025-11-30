@@ -46,7 +46,7 @@ public void visitNewPosition(MovementContext context, BlockPos pos) {
 1.  Open this folder in VS Code.
 2.  Wait for the Java extension to import the Gradle project.
 3.  Run `.\gradlew genIntellijRuns` (or VS Code equivalent) to generate run configurations.
-4.  Run `Client` to test.
+4.  Run `.\gradlew runClient` to test.
 
 ## TODO List
 - [x] Create `SmartDeployerBlock` registration.
