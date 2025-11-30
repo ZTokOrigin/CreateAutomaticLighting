@@ -4,27 +4,27 @@ license="MIT"
 issueTrackerURL="https://github.com/Zmotive/CreateSmartDeployTorches/issues"
 
 [[mods]]
-modId="create_sdt"
+modId="create_auto_light"
 version="1.0.0"
-displayName="Create: Smart Deploy Torches"
+displayName="Create: Auto Lighting"
 authors="Zack Tokarczyk"
-description='''A Create addon that adds smart deployment capabilities for torches based on light levels.'''
+description='''A Create addon that automatically deploys light sources based on light levels.'''
 
-[[dependencies.create_sdt]]
+[[dependencies.create_auto_light]]
 modId="neoforge"
 type="required"
 versionRange="[21.1,)"
 ordering="NONE"
 side="BOTH"
 
-[[dependencies.create_sdt]]
+[[dependencies.create_auto_light]]
 modId="minecraft"
 type="required"
 versionRange="[1.21.1,)"
 ordering="NONE"
 side="BOTH"
 
-[[dependencies.create_sdt]]
+[[dependencies.create_auto_light]]
 modId="create"
 type="required"
 versionRange="[6.0,)"

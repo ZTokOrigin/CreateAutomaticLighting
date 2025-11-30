@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "D": {
+      "item": "create:deployer"
+    },
+    "E": {
+      "item": "create:electron_tube"
+    },
+    "T": {
+      "item": "minecraft:torch"
+    }
+  },
+  "pattern": [
+    "T",
+    "D",
+    "E"
+  ],
+  "result": {
+    "count": 1,
+    "id": "create_auto_light:smart_deployer"
+  }
+}

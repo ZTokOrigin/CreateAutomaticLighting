@@ -1,5 +1,0 @@
-{
-  "block.create_sdt.smart_deployer": "Smart Deployer",
-  "block.create_sdt.smart_deployer.tooltip.summary": "Deploys light sources on contraptions when the light level is low. The minimum light level can be configured via the side panel.",
-  "item.create_sdt.smart_deployer.tooltip.summary": "Deploys light sources on contraptions when the light level is low. The minimum light level can be configured via the side panel."
-}

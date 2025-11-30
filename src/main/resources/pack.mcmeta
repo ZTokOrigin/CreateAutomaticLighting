@@ -1,6 +1,6 @@
 {
   "pack": {
-    "description": "create_sdt resources",
+    "description": "create_auto_light resources",
     "pack_format": 48,
     "supported_formats": [0, 2147483647]
   }

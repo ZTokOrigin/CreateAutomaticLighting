@@ -1,6 +1,0 @@
-// 1.21.1	2025-11-24T08:09:44.2592143	Registrate Provider for create_sdt [Registries, Data Maps, Recipes, Advancements, Loot Tables, Tags (blocks), Tags (enchantments), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider]
-dacd9a74b68aed5b9cf0180b93295c7215b84621 assets/create_sdt/lang/en_ud.json
-fae50b641e56b6cb33bf182d9c2373e4dffe1fe4 assets/create_sdt/lang/en_us.json
-c0e84ffe322f29f000a7ee28ef536b561387ea7e assets/create_sdt/models/item/smart_deployer.json
-f9aac88264d70bfe756266a063b39813a4612a70 data/create_sdt/loot_table/blocks/smart_deployer.json
-e1f3867e991ab2deafca6983684314124fb062ad data/minecraft/tags/block/mineable/pickaxe.json

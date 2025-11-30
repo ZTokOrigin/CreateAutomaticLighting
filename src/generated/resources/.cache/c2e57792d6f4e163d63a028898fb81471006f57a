@@ -1,0 +1,6 @@
+// 1.21.1	2025-11-30T14:31:16.5905255	Registrate Provider for create_auto_light [Registries, Data Maps, Recipes, Advancements, Loot Tables, Tags (blocks), Tags (enchantments), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider]
+14817e2fb7aa611b723ef016919261b46d6fdce1 assets/create_auto_light/lang/en_ud.json
+038a671c5c380ec75ef11d561d95a41f63f9f1f8 assets/create_auto_light/lang/en_us.json
+1fcf2ed454408a4a8d5b88a71bb820f135e38c39 assets/create_auto_light/models/item/smart_deployer.json
+9ec7a7a66c7087f0ae117dfb2d6afd76c8141d06 data/create_auto_light/loot_table/blocks/smart_deployer.json
+43c608d767c3b14345c7109c574fa283402c7fe0 data/minecraft/tags/block/mineable/pickaxe.json

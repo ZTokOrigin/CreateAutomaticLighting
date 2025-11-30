@@ -1,3 +1,3 @@
-// 1.21.1	2025-11-24T08:09:44.2612148	Recipes
-0536746e4061a694e5ec4b25b30a26904c45b6e9 data/create_sdt/advancement/recipes/redstone/smart_deployer.json
-8ab3272be45c245bd5f5f402ffb90d39448d030b data/create_sdt/recipe/smart_deployer.json
+// 1.21.1	2025-11-30T14:31:16.5925273	Recipes
+7941fe228b3475c25641ba52eb6aed3d8b5582bc data/create_auto_light/advancement/recipes/redstone/smart_deployer.json
+80237fc676ce84f82a65f04395d041fc9a6f546f data/create_auto_light/recipe/smart_deployer.json
